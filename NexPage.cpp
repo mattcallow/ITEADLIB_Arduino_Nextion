@@ -32,8 +32,6 @@ NexPage::NexPage(NexPid pid, NexCid cid, char *name, NexTouchEventCb pop, void *
  */
 bool NexPage::show(void)
 {
-    uint8_t buffer[4] = {0};
-
     const char *name = getObjName();
     if (!name)
     {

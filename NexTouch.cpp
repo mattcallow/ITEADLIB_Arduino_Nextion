@@ -23,18 +23,22 @@ uint8_t NexTouch::__buffer[256] = {0};
  * @param list - index to Nextion Components list. 
  * 
  */
-uint8_t NexTouch::mainEventLoop(NexTouch **list)
+void NexTouch::mainEventLoop(NexTouch **list)
 {
-    uint16_t i;
-    uint8_t c;
     
     while (true)
     {
+	    NexTouch::processEvent(list);
+    }
+}
+uint8_t NexTouch::processEvent(NexTouch **list)
+{
+    uint16_t i;
+    uint8_t c;
         while (nexSerial.available() > 0)
         {   
             delay(10);
             c = nexSerial.read();
-            
             if (NEX_RET_EVENT_TOUCH_HEAD == c)
             {
                 if (nexSerial.available() >= 6)
@@ -55,7 +59,6 @@ uint8_t NexTouch::mainEventLoop(NexTouch **list)
                 }
             }
         }
-    }        
     return 0;
 }
 
@@ -422,10 +425,14 @@ bool nexInit(void)
  * 
  * @retval false - failed. 
  */
-bool nexLoop(NexTouch **nexListenList)
+void nexLoop(NexTouch **nexListenList)
 {
     NexTouch::mainEventLoop(nexListenList);
-    return false;
+}
+
+bool nexProcessEvent(NexTouch **nexListenList)
+{
+    return NexTouch::processEvent(nexListenList);
 }
 
 /**

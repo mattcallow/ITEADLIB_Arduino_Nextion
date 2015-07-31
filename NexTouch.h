@@ -57,7 +57,8 @@ typedef void (*NexTouchEventCb)(void *ptr);
 class NexTouch 
 {
 public: /* static methods */ 
-    static uint8_t mainEventLoop(NexTouch **list);
+    static void mainEventLoop(NexTouch **list);
+    static uint8_t processEvent(NexTouch **list);
     static void sendCommand(const char *cmd); 
     static bool recvRetCommandFinished(uint32_t timeout = 100);
     static uint16_t recvRetString(char *buffer, uint16_t len, uint32_t timeout = 500);
@@ -104,8 +105,9 @@ private: /* data */
 };
 
 bool nexInit(void);
-bool nexLoop(NexTouch **nexListenList);
-bool  sendCurrentPageId(uint8_t* pageId);
+void nexLoop(NexTouch **nexListenList);
+bool nexProcessEvent(NexTouch **nexListenList);
+bool sendCurrentPageId(uint8_t* pageId);
 bool touchCalibration(void);
 bool disableTouchFocus(void); 
 bool pauseSerialCommand(void); 

@@ -33,6 +33,6 @@
 #endif
 
 /*define serial for communicate with Nextion screen*/
-#define nexSerial Serial2
+#define nexSerial Serial1
 
 #endif 
